@@ -1,192 +1,59 @@
-HAM group for physical therapy | Mohammed
-My Role Here
+HAM Group for Physical Therapy | Mohammed
+My Role
 
-I was responsible for implementing core backend features of the physical therapy system. My contributions covered controllers, services, models, repositories, and utilities, with a strong focus on email notifications, PDF generation, booking management, and treatment plan automation.
+I developed core backend features of the physical therapy system, focusing on:
 
-📂 Controllers
-BookingController (by Mohammed)
+📅 Booking management
 
-Create, update, and delete bookings between patients and doctors.
+🩺 Treatment plan automation
 
-Retrieve patient bookings filtered by status and date range.
+📧 Email notifications
 
-PatientController (by Mohammed)
+📄 PDF report generation
 
-Added an endpoint to request a PDF report for a patient from a doctor.
+📂 Main Contributions
+Controllers
 
-PlanController (by Mohammed)
+BookingController → Manage bookings (create/update/delete + filter by status & date).
 
-Retrieve all treatment plans.
+PatientController → Request patient PDF reports.
 
-Add a new plan for a patient by a doctor.
+PlanController → CRUD for treatment plans.
 
-Update an existing plan.
+QuestionController → CRUD for questions.
 
-Delete a plan.
+ReportController → CRUD + PDF report generation.
 
-QuestionController (by Mohammed)
+VideoController → Upload videos linked to plans (doctor & patient).
 
-Retrieve all questions.
+DTOs & Models
 
-Add a new question.
+Added validation for booking dates & patient emails.
 
-Update an existing question.
+Extended Doctor & Patient models with unique email fields.
 
-Delete a question.
+Enhanced Plan model with video relations.
 
-ReportController (by Mohammed)
+Repositories
 
-Add a new report (with @RequestBody and @Valid).
+Custom queries for bookings, plans, and questions (filtering, existence checks, doctor/patient relations).
 
-Update an existing report (with @RequestBody and @Valid).
+Services
 
-Generate a PDF report for a patient and doctor (dynamic filename + proper HttpHeaders).
+BookingService → Email notifications & auto plan creation on booking updates.
 
-VideoController (by Mohammed)
+DoctorService → Welcome + profile update emails.
 
-Upload a video for a patient in a specific plan.
+EmailService → Complete email system (HTML templates, styled).
 
-Upload a video for a doctor in a specific plan.
+PDF Services → Generate reports directly from HTML (OpenHtmlToPdfGenerator, ReportPdfService).
 
-📂 DTOs
-BookingDTO (by Mohammed)
+✅ Key Impact
 
-Appointment date validation using @FutureOrPresent and @NotNull.
+Automated booking & treatment workflows.
 
-Appointment day validation with the same constraints.
+Enabled dynamic PDF reporting for patients and doctors.
 
-Applied @JsonFormat for correct date & time formatting.
+Implemented email communication system (welcome emails, updates, medical reports).
 
-PatientDTO (by Mohammed)
-
-Added email field with validation.
-
-Used @Email to enforce valid email structure.
-
-Constraints applied with @NotEmpty and @Size(max = 30).
-
-📂 Models
-Doctor Model (by Mohammed)
-
-Added email field.
-
-Patient Model (by Mohammed)
-
-Added email field.
-
-(Fix by Hussam: @Column(columnDefinition = "varchar(30) unique not null")).
-
-Plan Model (by Mohammed)
-
-Added video list with @OneToMany relation (cascade = ALL, mappedBy = "plan").
-
-Annotated with @JsonIgnore to prevent serialization issues.
-
-📂 Repositories
-BookingRepository (by Mohammed)
-
-Added multiple query methods, including:
-
-getBookingById(Integer id)
-
-findByPatient_Id(Integer patientId)
-
-findBookingByDoctor_Id(Integer doctorId)
-
-findBookingByPatient_Id(Integer patientId)
-
-findBookingByPatient_IdOrderByAppointmentDateDesc(...)
-
-existsByDoctor_IdAndAppointmentDate(...)
-
-existsByDoctor_IdAndAppointmentDateAfter(...)
-
-existsBySchedule(Schedule schedule)
-
-findBookingByAppointmentDateBetween(...)
-
-PlanRepository (by Mohammed)
-
-findPlanById(Integer id)
-
-existsPlanByDoctor_IdAndPatient_Id(Integer doctorId, Integer patientId)
-
-findVideosByPlanIdAndDoctorId(...) (custom query).
-
-findPlanByIdAndPatient_Id(...)
-
-findPlanByIdAndDoctor_Id(...)
-
-QuestionRepository (by Mohammed)
-
-findQuestionById(Integer id)
-
-📌 Service Layer Contributions
-BookingService (by Mohammed)
-
-Email Notifications
-
-Integrated EmailService into booking updates.
-
-When status = "go-to-hospital", an instruction email is sent to the patient.
-
-Automatic Plan Creation
-
-When status = "go-to-plan", a new treatment plan is automatically created & linked.
-
-Extra Endpoint
-
-getPatientBookingsSimple(patientId, status, on, from, to)
-
-Flexible filters by status, single date, or date range.
-
-Results sorted by appointmentDate (ascending).
-
-DoctorService (by Mohammed)
-
-Welcome Email
-
-Sends a welcome email to new doctors when registered.
-
-Used emailService.sendWelcomeDoctorEmail(...).
-
-Profile Update Notification
-
-Sends an email when a doctor updates their profile.
-
-📧 Email & PDF Services
-EmailService (by Mohammed)
-
-Fully implemented HTML-based email communication for doctors, patients, and hospital staff.
-
-Uses Spring Boot JavaMailSender with styled templates.
-
-Supports:
-
-Welcome emails (patients & doctors).
-
-Profile update confirmations.
-
-Patient medical report distribution.
-
-OpenHtmlToPdfGenerator (by Mohammed)
-
-Implemented PDF generation directly from HTML.
-
-Used for reports and email attachments.
-
-ReportPdfService (by Mohammed)
-
-Generates PDF files from Report objects.
-
-ReportService (by Mohammed)
-
-Added generatePdfReport to generate dynamic patient reports.
-
-📄 Additional Contributions
-
-Implemented QuestionService (CRUD).
-
-Defined a PdfGenerator interface for flexible PDF generation.
-
-Ensured proper validation, error handling, and messaging across services.
+Built reliable CRUD modules with proper validation and error handling.
